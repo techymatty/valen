@@ -1,0 +1,159 @@
+:root {
+  --bg1: #ff8ba7;
+  --bg2: #ffc6d3;
+  --card: rgba(255, 255, 255, 0.88);
+  --text: #3c1f35;
+  --accent: #ff4d88;
+  --accent-dark: #e02469;
+  --yes: #ff2b72;
+  --yes-dark: #d9195c;
+  --no: #ffebf3;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  font-family: "Nunito", system-ui, sans-serif;
+  color: var(--text);
+  background: radial-gradient(circle at top left, #ffdce6 0%, transparent 45%),
+    linear-gradient(135deg, var(--bg1), var(--bg2));
+  padding: 1rem;
+}
+
+.app {
+  width: min(640px, 100%);
+  position: relative;
+}
+
+.card {
+  border-radius: 24px;
+  background: var(--card);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 18px 55px rgba(67, 11, 42, 0.25);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  text-align: center;
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.hidden {
+  display: none;
+}
+
+.eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  opacity: 0.8;
+}
+
+h1,
+h2 {
+  margin: 0.4rem 0 0.5rem;
+  line-height: 1.15;
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+}
+
+h2 {
+  font-size: clamp(1.8rem, 4.7vw, 2.8rem);
+}
+
+.subtitle {
+  margin: 0 auto;
+  max-width: 34ch;
+  font-size: clamp(1rem, 2.8vw, 1.15rem);
+}
+
+.emoji {
+  font-size: clamp(2.2rem, 8vw, 3.4rem);
+}
+
+.actions {
+  margin-top: 1.6rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  min-height: 66px;
+  position: relative;
+}
+
+.button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.82rem 1.4rem;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 140ms ease, box-shadow 140ms ease, background 140ms ease;
+}
+
+.button:hover {
+  transform: translateY(-2px) scale(1.02);
+}
+
+.button:active {
+  transform: translateY(0) scale(0.99);
+}
+
+.button:focus-visible {
+  outline: 3px solid #7a0048;
+  outline-offset: 2px;
+}
+
+.primary,
+.secondary {
+  margin-top: 1.4rem;
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(224, 36, 105, 0.35);
+}
+
+.primary:hover,
+.secondary:hover {
+  background: var(--accent-dark);
+}
+
+.yes {
+  background: var(--yes);
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(217, 25, 92, 0.35);
+}
+
+.yes:hover {
+  background: var(--yes-dark);
+}
+
+.no {
+  background: var(--no);
+  color: #6a3856;
+}
+
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: float 900ms ease-out forwards;
+}
+
+@keyframes float {
+  from {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateY(70px) scale(0.4);
+    opacity: 0;
+  }
+}
