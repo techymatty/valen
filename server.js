@@ -61,7 +61,7 @@ const server = http.createServer((req, res) => {
   });
 });
 
-server.listen(PORT, "0.0.0.0", () => {
+server.listen(PORT, "localhost", () => {
   // eslint-disable-next-line no-console
-  console.log(`Valentine site running on http://0.0.0.0:${PORT}`);
+  console.log(`Valentine site running on http://localhost:${PORT}`);
 });

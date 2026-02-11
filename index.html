@@ -16,7 +16,7 @@
     <main class="app">
       <section id="landing" class="card hidden" aria-live="polite">
         <p class="eyebrow">A tiny note for someone special</p>
-        <h1>Hey you 💌</h1>
+        <h1>Hey Babe 💌</h1>
         <p class="subtitle">I made this just to ask one question…</p>
         <button id="startButton" class="button primary">Open the note</button>
       </section>
@@ -26,16 +26,20 @@
         <h2>Will you be my Valentine?</h2>
         <p id="statusLine" class="subtitle">Take your time. I can wait forever.</p>
         <div class="actions">
-          <button id="yesButton" class="button yes">Yes 💖</button>
+          <button id="yesButton" class="button yes">Yes 💗</button>
           <button id="noButton" class="button no">No 🙈</button>
         </div>
       </section>
 
-      <section id="accepted" class="card hidden" aria-live="polite">
-        <div class="emoji" aria-hidden="true">💘</div>
-        <h2>Best. Answer. Ever.</h2>
-        <p class="subtitle">You just made my whole year brighter.</p>
-        <button id="restartButton" class="button secondary">Ask again</button>
+     <section id="accepted" class="card accepted-card hidden" aria-live="polite">
+        <h2 class="accepted-title">It's a date then!</h2>
+        <p class="accepted-subtitle">Knew you'd say yes</p>
+         <img
+          class="accepted-gif"
+          src="https://media1.tenor.com/m/MimC9GygFMsAAAAd/mr-bean-mrbean.gif"
+          alt="She said yes celebration"
+        />
+        <button id="restartButton" class="button primary">Start Over</button>
       </section>
     </main>
 
