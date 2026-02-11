@@ -5,9 +5,38 @@ const accepted = document.getElementById("accepted");
 const startButton = document.getElementById("startButton");
 const yesButton = document.getElementById("yesButton");
 const noButton = document.getElementById("noButton");
-const restartButton = document.getElementById("restartButton");
-const statusLine = document.getElementById("statusLine");
+const statusLine = document.getElementById("statusLine");const acceptedGif = document.querySelector(".accepted-gif");
 
+const celebrationGifs = [
+  "https://media1.tenor.com/m/MimC9GygFMsAAAAd/mr-bean-mrbean.gif",
+  "https://media1.tenor.com/m/PsJiKnUdAIIAAAAC/she-said-yes-nick-cannon.gif",
+  "https://media1.tenor.com/m/lcRDHjziOpoAAAAd/thatha-dance.gif",
+  "https://media1.tenor.com/m/VQCo5SIvl2kAAAAC/thats-cute-mason-kane.gif",
+  "https://media1.tenor.com/m/Hp9eRwofx-EAAAAd/valentines-day.gif",
+  "https://media1.tenor.com/m/hppcHIyK0kQAAAAC/oh-yeah-parks-and-recreation.gif",
+  "https://media1.tenor.com/m/7E6_LJNFjR4AAAAC/oh-yeah.gif",
+  "https://media1.tenor.com/m/j3JEYk31qZgAAAAC/ahh-ahhhhh.gif",
+  "http://media1.tenor.com/m/t8bjAzYaA7sAAAAC/friends-phoebe.gif",
+  "https://media1.tenor.com/m/rDWvLZHYJv0AAAAC/thumbs-up-go.gif"
+];
+
+let usedGifs = [];
+let availableGifs = [...celebrationGifs];
+
+function getNextGif() {
+  if (availableGifs.length === 0) {
+    availableGifs = [...celebrationGifs];
+    usedGifs = [];
+  }
+  
+  const randomIndex = Math.floor(Math.random() * availableGifs.length);
+  const selectedGif = availableGifs[randomIndex];
+  
+  usedGifs.push(selectedGif);
+  availableGifs.splice(randomIndex, 1);
+  
+  return selectedGif;
+}
 const noMessages = [
   "Are you sure? I brought extra chocolates 🍫",
  "This isn’t flirting. This is me giving you a chance 😏",
@@ -77,6 +106,8 @@ startButton.addEventListener("click", () => {
 });
 
 yesButton.addEventListener("click", () => {
+  const nextGif = getNextGif();
+  acceptedGif.src = nextGif;
   show(accepted);
   burstConfetti();
 });
@@ -94,6 +125,7 @@ noButton.addEventListener("mouseenter", dodgeNoButton);
 noButton.addEventListener("touchstart", dodgeNoButton, { passive: true });
 
 restartButton.addEventListener("click", () => {
+  resetQuestion();
   show(landing);
 });
 
