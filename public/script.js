@@ -5,7 +5,6 @@ const accepted = document.getElementById("accepted");
 const startButton = document.getElementById("startButton");
 const yesButton = document.getElementById("yesButton");
 const noButton = document.getElementById("noButton");
-const restartButton = document.getElementById("restartButton");
 const statusLine = document.getElementById("statusLine");
 
 const noMessages = [
@@ -93,9 +92,6 @@ noButton.addEventListener("click", () => {
 noButton.addEventListener("mouseenter", dodgeNoButton);
 noButton.addEventListener("touchstart", dodgeNoButton, { passive: true });
 
-restartButton.addEventListener("click", () => {
-  show(landing);
-});
 
 const params = new URLSearchParams(window.location.search);
 show(params.get("start") === "1" ? question : landing);
