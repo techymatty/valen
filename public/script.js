@@ -15,20 +15,30 @@ const noMessages = [
   "Last try: say yes and I’ll plan the perfect date ✨"
 ];
 
-let noClicks = 0;
+let noDodges = 0;
+const maxNoDodges = 9;
 
 function show(section) {
   [landing, question, accepted].forEach((el) => el.classList.add("hidden"));
   section.classList.remove("hidden");
 }
 
-function inflateYesButton() {
-  const scale = 1 + noClicks * 0.18;
-  yesButton.style.transform = `scale(${Math.min(scale, 2.2)})`;
-}
+function dodgeNoButton() {
+  if (noDodges >= maxNoDodges) {
+    return;
+  }
 
-function updateNoButtonText() {
-  noButton.textContent = noClicks >= 4 ? "Fine... Yes 💕" : "No 🙈";
+  noDodges += 1;
+
+  const x = Math.floor((Math.random() * 260) - 130);
+  const y = Math.floor((Math.random() * 120) - 60);
+  noButton.style.transform = `translate(${x}px, ${y}px)`;
+
+  if (noDodges < maxNoDodges) {
+    statusLine.textContent = noMessages[(noDodges - 1) % noMessages.length];
+  } else {
+    statusLine.textContent = "Okay fine... the No button is done running 😅";
+  }
 }
 
 function burstConfetti() {
@@ -44,8 +54,8 @@ function burstConfetti() {
 }
 
 function resetQuestion() {
-  noClicks = 0;
-  yesButton.style.transform = "scale(1)";
+  noDodges = 0;
+  noButton.style.transform = "translate(0, 0)";
   noButton.textContent = "No 🙈";
   statusLine.textContent = "Take your time. I can wait forever.";
 }
@@ -61,18 +71,16 @@ yesButton.addEventListener("click", () => {
 });
 
 noButton.addEventListener("click", () => {
-  noClicks += 1;
-
-  if (noClicks >= 4) {
-    show(accepted);
-    burstConfetti();
+  if (noDodges < maxNoDodges) {
+    dodgeNoButton();
     return;
   }
 
-  statusLine.textContent = noMessages[noClicks - 1];
-  inflateYesButton();
-  updateNoButtonText();
+  statusLine.textContent = "You finally caught it. But yes is still cuter 💖";
 });
+
+noButton.addEventListener("mouseenter", dodgeNoButton);
+noButton.addEventListener("touchstart", dodgeNoButton, { passive: true });
 
 restartButton.addEventListener("click", () => {
   show(landing);
