@@ -55,6 +55,8 @@ const noMessages = [
 
 let noDodges = 0;
 const maxNoDodges = 9;
+let lastDodgeTime = 0;
+const dodgeDebounce = 150; // ms to prevent double-triggering
 
 function show(section) {
   [landing, question, accepted].forEach((el) => el.classList.add("hidden"));
@@ -149,15 +151,36 @@ yesButton.addEventListener("click", () => {
 
 noButton.addEventListener("click", () => {
   if (noDodges < maxNoDodges) {
-    dodgeNoButton();
+    const now = Date.now();
+    if (now - lastDodgeTime > dodgeDebounce) {
+      lastDodgeTime = now;
+      dodgeNoButton();
+    }
     return;
   }
 
   statusLine.textContent = "You finally caught it. But yes is still cuter 💖";
 });
 
-noButton.addEventListener("mouseenter", dodgeNoButton);
-noButton.addEventListener("touchstart", dodgeNoButton, { passive: true });
+noButton.addEventListener("pointerenter", (e) => {
+  if (e.pointerType === "mouse") {
+    const now = Date.now();
+    if (now - lastDodgeTime > dodgeDebounce) {
+      lastDodgeTime = now;
+      dodgeNoButton();
+    }
+  }
+});
+
+noButton.addEventListener("pointerdown", (e) => {
+  if (e.pointerType === "touch" || e.pointerType === "pen") {
+    const now = Date.now();
+    if (now - lastDodgeTime > dodgeDebounce) {
+      lastDodgeTime = now;
+      dodgeNoButton();
+    }
+  }
+});
 
 if (restartButton) {
   restartButton.addEventListener("click", () => {
