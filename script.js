@@ -5,19 +5,23 @@ const accepted = document.getElementById("accepted");
 const startButton = document.getElementById("startButton");
 const yesButton = document.getElementById("yesButton");
 const noButton = document.getElementById("noButton");
+const restartButton = document.getElementById("restartButton");
+const landingForm = document.getElementById("landingForm");
+const recipientName = document.getElementById("recipientName");
+const greeting = document.getElementById("greeting");
 const statusLine = document.getElementById("statusLine");const acceptedGif = document.querySelector(".accepted-gif");
 
 const celebrationGifs = [
-  "https://media1.tenor.com/m/MimC9GygFMsAAAAd/mr-bean-mrbean.gif",
-  "https://media1.tenor.com/m/PsJiKnUdAIIAAAAC/she-said-yes-nick-cannon.gif",
-  "https://media1.tenor.com/m/lcRDHjziOpoAAAAd/thatha-dance.gif",
-  "https://media1.tenor.com/m/VQCo5SIvl2kAAAAC/thats-cute-mason-kane.gif",
-  "https://media1.tenor.com/m/Hp9eRwofx-EAAAAd/valentines-day.gif",
-  "https://media1.tenor.com/m/hppcHIyK0kQAAAAC/oh-yeah-parks-and-recreation.gif",
-  "https://media1.tenor.com/m/7E6_LJNFjR4AAAAC/oh-yeah.gif",
-  "https://media1.tenor.com/m/j3JEYk31qZgAAAAC/ahh-ahhhhh.gif",
-  "http://media1.tenor.com/m/t8bjAzYaA7sAAAAC/friends-phoebe.gif",
-  "https://media1.tenor.com/m/rDWvLZHYJv0AAAAC/thumbs-up-go.gif"
+  "https://media1.tenor.com/m/PNaiLyqokFEAAAAC/kiss.gif",
+  "https://media.tenor.com/F0_vdS_Qo2UAAAAi/hehehehe-in-love.gif",
+  "https://media.tenor.com/H_u4zlHSRUoAAAAi/love-delivery.gif",
+  "https://media.tenor.com/30-YAHDySRIAAAAi/i-need-you.gif",
+  "https://media.tenor.com/ffG8ZgTeQ74AAAAi/peach-and-goma-cute.gif",
+  "https://media1.tenor.com/m/gJ1y-yw_GT0AAAAC/milk-and-mocha-milk-mocha.gif",
+  "https://media.tenor.com/F2SQcVd5fMIAAAAj/hug-couple.gif",
+  "https://media.tenor.com/n0fGerq4HTYAAAAj/heart-here.gif",
+  "https://media1.tenor.com/m/ITtPYeOZKpYAAAAC/aw-its-so-cute.gif",
+  "https://media.tenor.com/m8vwQqfk0I4AAAAj/peach-and-goma-cuddle.gif"
 ];
 
 let usedGifs = [];
@@ -77,6 +81,7 @@ function dodgeNoButton() {
     statusLine.textContent = noMessages[(noDodges - 1) % noMessages.length];
   } else {
     statusLine.textContent = "Okay fine... the No button is done running 😅";
+    noButton.classList.add("hidden");
   }
 }
 
@@ -97,13 +102,43 @@ function resetQuestion() {
   yesButton.style.transform = "scale(1)";
   noButton.style.transform = "scale(1)";
   noButton.textContent = "No 🙈";
+  noButton.classList.remove("hidden");
   statusLine.textContent = "Take your time. I can wait forever.";
 }
 
-startButton.addEventListener("click", () => {
-  resetQuestion();
-  show(question);
-});
+if (landingForm) {
+  landingForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const name = (recipientName && recipientName.value.trim()) || "";
+    if (!name) {
+      if (recipientName) {
+        recipientName.classList.add("input-error");
+        recipientName.setAttribute("aria-invalid", "true");
+        recipientName.focus();
+        setTimeout(() => {
+          recipientName.classList.remove("input-error");
+          recipientName.removeAttribute("aria-invalid");
+        }, 1800);
+      }
+      return; // don't proceed without a name
+    }
+
+    if (greeting) greeting.textContent = `Hey ${name} 💌`;
+    resetQuestion();
+    show(question);
+  });
+} else {
+  startButton.addEventListener("click", () => {
+    resetQuestion();
+    show(question);
+  });
+}
+if (recipientName) {
+  recipientName.addEventListener("input", () => {
+    recipientName.classList.remove("input-error");
+    recipientName.removeAttribute("aria-invalid");
+  });
+}
 
 yesButton.addEventListener("click", () => {
   const nextGif = getNextGif();
@@ -124,10 +159,14 @@ noButton.addEventListener("click", () => {
 noButton.addEventListener("mouseenter", dodgeNoButton);
 noButton.addEventListener("touchstart", dodgeNoButton, { passive: true });
 
-restartButton.addEventListener("click", () => {
-  resetQuestion();
-  show(landing);
-});
+if (restartButton) {
+  restartButton.addEventListener("click", () => {
+    resetQuestion();
+    if (recipientName) recipientName.value = "";
+    if (greeting) greeting.textContent = "Hey Babe 💌";
+    show(landing);
+  });
+}
 
 const params = new URLSearchParams(window.location.search);
 show(params.get("start") === "1" ? question : landing);

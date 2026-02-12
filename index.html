@@ -14,17 +14,23 @@
   </head>
   <body>
     <main class="app">
-      <section id="landing" class="card hidden" aria-live="polite">
-        <p class="eyebrow">A tiny note for someone special</p>
-        <h1>Hey Babe 💌</h1>
-        <p class="subtitle">I made this just to ask one question…</p>
-        <button id="startButton" class="button primary">Open the note</button>
+      <section id="landing" class="card landing-card" aria-live="polite">
+        <p class="eyebrow">A Tiny Note For Someone Special</p>
+        <h2>Why not give it a try?</h2>
+        <p class="subtitle">Enter Your Name To See The Message.</p>
+        <form id="landingForm" style="margin-top:1.4rem;">
+          <input id="recipientName" class="input-field" type="text" placeholder="Enter Your Name" aria-label="Recipient name" />
+          <div style="display:flex;justify-content:center;margin-top:1rem;">
+            <button id="startButton" class="button primary" type="submit">See Message</button>
+          </div>
+        </form>
       </section>
 
       <section id="question" class="card hidden" aria-live="polite">
         <div class="emoji" aria-hidden="true">🌹</div>
-        <h2>Will you be my Valentine?</h2>
-        <p id="statusLine" class="subtitle">Take your time. I can wait forever.</p>
+        <h2 id="greeting">Hey Babe 💌</h2>
+        <h3 class="question-text">Will You Be My Valentine?</h3>
+        <p id="statusLine" class="subtitle">Take Your Time. I Can Wait Forever.</p>
         <div class="actions">
           <button id="yesButton" class="button yes">Yes 💗</button>
           <button id="noButton" class="button no">No 🙈</button>
@@ -32,8 +38,8 @@
       </section>
 
      <section id="accepted" class="card accepted-card hidden" aria-live="polite">
-        <h2 class="accepted-title">It's a date then!</h2>
-        <p class="accepted-subtitle">Knew you'd say yes</p>
+        <h2 class="accepted-title">It's a Date Then!</h2>
+        <p class="accepted-subtitle">Knew You'd Say Yes</p>
         <img
           class="accepted-gif"
           alt="Celebration"
