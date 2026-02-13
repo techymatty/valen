@@ -155,6 +155,10 @@ if (landingForm) {
 
       const hideModal = () => {
         if (shareModal) shareModal.classList.add("hidden");
+        // return user to the landing (enter name) page when modal closes
+        resetQuestion();
+        show(landing);
+        if (recipientName) recipientName.focus();
       };
 
       if (modalClose) modalClose.onclick = hideModal;
