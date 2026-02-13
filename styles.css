@@ -62,6 +62,53 @@ body {
   outline: none;
 }
 
+.modal {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 1200;
+}
+
+.modal.hidden { display: none; }
+
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 8, 12, 0.45);
+  backdrop-filter: blur(3px);
+}
+
+.modal-content {
+  position: relative;
+  background: var(--card);
+  padding: 1.4rem;
+  border-radius: 14px;
+  width: min(680px, 92%);
+  max-width: 720px;
+  z-index: 2;
+  box-shadow: 0 18px 50px rgba(0,0,0,0.25);
+  text-align: center;
+}
+
+.modal-content a.button {
+  background: transparent;
+  color: var(--title);
+  box-shadow: none;
+  padding: 0;
+  min-width: auto;
+  border-radius: 6px;
+  font-weight: 800;
+  text-decoration: underline;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content a.button:hover {
+  color: var(--accent-dark);
+}
+
 .input-field::placeholder {
   color: rgba(60,31,53,0.45);
 }

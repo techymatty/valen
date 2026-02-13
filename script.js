@@ -126,6 +126,44 @@ if (landingForm) {
     }
 
     if (greeting) greeting.textContent = `Hey ${name} 💌`;
+    // generate shareable link
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.set("start", "1");
+      url.searchParams.set("name", name);
+      const shareUrl = url.toString();
+      // open modal with share actions
+      const shareModal = document.getElementById("shareModal");
+      const modalShareLink = document.getElementById("modalShareLink");
+      const modalCopy = document.getElementById("modalCopy");
+      const modalClose = document.getElementById("modalClose");
+      const modalOverlay = document.getElementById("modalOverlay");
+      if (modalShareLink) modalShareLink.value = shareUrl;
+      if (shareModal) shareModal.classList.remove("hidden");
+
+      if (modalCopy) {
+        modalCopy.onclick = async () => {
+          try {
+            await navigator.clipboard.writeText(shareUrl);
+            modalCopy.textContent = "Copied";
+            setTimeout(() => (modalCopy.textContent = "Copy Link"), 1400);
+          } catch (err) {
+            console.warn("Copy failed", err);
+          }
+        };
+      }
+
+      const hideModal = () => {
+        if (shareModal) shareModal.classList.add("hidden");
+      };
+
+      if (modalClose) modalClose.onclick = hideModal;
+      if (modalOverlay) modalOverlay.onclick = hideModal;
+
+    } catch (err) {
+      console.warn("Failed to build share URL", err);
+    }
+
     resetQuestion();
     show(question);
   });
@@ -185,11 +223,19 @@ noButton.addEventListener("pointerdown", (e) => {
 if (restartButton) {
   restartButton.addEventListener("click", () => {
     resetQuestion();
-    if (recipientName) recipientName.value = "";
-    if (greeting) greeting.textContent = "Hey Babe 💌";
-    show(landing);
+    show(question);
   });
 }
 
 const params = new URLSearchParams(window.location.search);
-show(params.get("start") === "1" ? question : landing);
+const startParam = params.get("start");
+const nameParam = params.get("name");
+if (nameParam && greeting) {
+  try {
+    const decoded = decodeURIComponent(nameParam);
+    greeting.textContent = `Hey ${decoded} 💌`;
+  } catch (e) {
+    greeting.textContent = `Hey ${nameParam} 💌`;
+  }
+}
+show(startParam === "1" ? question : landing);
